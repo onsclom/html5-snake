@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>snake</title>
+    <style>
+      body {
+        /* https://systemfontstack.com/ */
+        font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+          segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto,
+          arial, sans-serif;
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+      }
+      button {
+        width: 4rem;
+        height: 4rem;
+        font-size: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>snake</h1>
+      <canvas
+        style="max-width: 100%"
+        id="canvas"
+        width="400"
+        height="400"
+      ></canvas>
+      <!-- onpointerdown is a better experience for mobile than onclick -->
+      <button onpointerdown="changeDir('ArrowLeft')">⬅️</button>
+      <button onpointerdown="changeDir('ArrowDown')">⬇️</button>
+      <button onpointerdown="changeDir('ArrowUp')">⬆️</button>
+      <button onpointerdown="changeDir('ArrowRight')">➡️</button>
+      <div>
+        <p>arrow keys work too!</p>
+        <a href="./snake.js">view the code</a>
+      </div>
+    </main>
+    <script src="snake.js"></script>
+  </body>
+</html>
