@@ -45,10 +45,10 @@ const dirs = {
   ArrowLeft: v2d(-1, 0),
   ArrowRight: v2d(1, 0),
 };
-const changeDir = (arrow) => {
+function changeDir(arrow) {
   const newDir = dirs[arrow] || dir;
-  const lastDir = moveBuffer.at(-1) || dir;
-  const illegalDir = lastDir.x == -newDir.x && lastDir.y == -newDir.y;
-  if (!illegalDir) moveBuffer.push(newDir);
-};
-window.onkeydown = (e) => changeDir(e.key);
+  const prevDir = moveBuffer.at(-1) || dir;
+  const illegalDir = prevDir.x == -newDir.x && prevDir.y == -newDir.y;
+  if (!illegalDir) moveBuffer = [...moveBuffer, newDir];
+}
+window.onkeydown = (event) => changeDir(event.key);
