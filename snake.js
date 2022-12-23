@@ -1,4 +1,8 @@
 const GRID_SIZE = 20;
+let canvas = document.querySelector("#canvas");
+canvas.width = GRID_SIZE;
+canvas.height = GRID_SIZE;
+
 const v2d = (x, y) => ({ x, y, toString: () => `${x}, ${y}` });
 const randInt = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 const randPos = () => v2d(randInt(0, GRID_SIZE), randInt(0, GRID_SIZE));
@@ -23,16 +27,13 @@ function gameLoop() {
     alert(`Game over. Your snake was ${size} long!`);
     location.reload();
   }
-
-  const canvas = document.querySelector("#canvas");
   const ctx = canvas.getContext("2d");
-  const GRID = canvas.width / GRID_SIZE;
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, GRID_SIZE, GRID_SIZE);
   ctx.fillStyle = "red";
-  ctx.fillRect(apple.x * GRID, apple.y * GRID, GRID, GRID);
+  ctx.fillRect(apple.x, apple.y, 1, 1);
   ctx.fillStyle = "green";
-  snake.forEach(({ x, y }) => ctx.fillRect(x * GRID, y * GRID, GRID, GRID));
+  snake.forEach(({ x, y }) => ctx.fillRect(x, y, 1, 1));
 }
 
 const FPS = 12;
