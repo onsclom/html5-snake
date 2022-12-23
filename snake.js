@@ -1,8 +1,5 @@
 const GRID_SIZE = 20;
-let canvas = document.querySelector("#canvas");
-canvas.width = GRID_SIZE;
-canvas.height = GRID_SIZE;
-
+const FPS = 12;
 const v2d = (x, y) => ({ x, y, toString: () => `${x}, ${y}` });
 const randInt = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 const randPos = () => v2d(randInt(0, GRID_SIZE), randInt(0, GRID_SIZE));
@@ -11,6 +8,13 @@ let snake = [v2d(2, 2)];
 let size = 1;
 let dir = v2d(0, 0);
 let apple = randPos();
+let moveBuffer = [];
+let canvas = document.querySelector("#canvas");
+let interval = setInterval(gameLoop, 1000 / FPS);
+
+canvas.width = GRID_SIZE;
+canvas.height = GRID_SIZE;
+window.onkeydown = (event) => changeDir(event.key);
 
 function gameLoop() {
   if (moveBuffer.length) dir = moveBuffer.shift();
@@ -36,19 +40,15 @@ function gameLoop() {
   snake.forEach(({ x, y }) => ctx.fillRect(x, y, 1, 1));
 }
 
-const FPS = 12;
-let interval = setInterval(gameLoop, 1000 / FPS);
-let moveBuffer = [];
-const dirs = {
-  ArrowUp: v2d(0, -1),
-  ArrowDown: v2d(0, 1),
-  ArrowLeft: v2d(-1, 0),
-  ArrowRight: v2d(1, 0),
-};
 function changeDir(arrow) {
+  const dirs = {
+    ArrowUp: v2d(0, -1),
+    ArrowDown: v2d(0, 1),
+    ArrowLeft: v2d(-1, 0),
+    ArrowRight: v2d(1, 0),
+  };
   const newDir = dirs[arrow] || dir;
   const prevDir = moveBuffer.at(-1) || dir;
-  const illegalDir = prevDir.x == -newDir.x && prevDir.y == -newDir.y;
+  const illegalDir = prevDir.x === -newDir.x && prevDir.y === -newDir.y;
   if (!illegalDir) moveBuffer = [...moveBuffer, newDir];
 }
-window.onkeydown = (event) => changeDir(event.key);
